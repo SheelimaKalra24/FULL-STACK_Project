@@ -26,7 +26,7 @@ const Posts = () => {
       <Link to={'form/'}><Button variant="primary" className="card-button">
         Create Post
       </Button></Link>
-      {data ? (<div style={{ display: "flex" }} >{data.map((post, index) => (<Post key={index} post={post}/>))}</div>) : (<p>Loading...</p>)}
+      {data ? (<div style={{ display: "flex", flexWrap:'wrap' }} >{data.map((post, index) => (<Post key={index} post={post}/>))}</div>) : (<p>Loading...</p>)}
     </div>
   );
 };
