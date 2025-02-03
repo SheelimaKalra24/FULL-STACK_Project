@@ -17,7 +17,10 @@ const Post = ({post}) => {
                 <Card.Title className="card-title">{post.title}</Card.Title>
                 <Card.Text className="card-text">{post.des}</Card.Text>
                 <Button variant="primary" className="card-button">
-                  Go somewhere
+                  Edit
+                </Button>
+                <Button variant="primary" className="card-button">
+                  Delete
                 </Button>
               </Card.Body>
             </Card>
