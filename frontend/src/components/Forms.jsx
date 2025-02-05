@@ -1,18 +1,40 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import { Context } from "./Context";
 
 
 const Forms = () => {
-  const [data, setData] = useState([]);
+  const {fetchData} = useContext(Context)
+  const [state, setState] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     des: "",
     image: null,
   });
-
+  const {id} = useParams();
   const navigate = useNavigate()
+
+  
+  
+
+ 
+  
+    if(id){
+      try{
+        useEffect(() => {
+          axios
+            .get(`http://127.0.0.1:8000/${id}/`)
+            .then((value) => setFormData(value.data))
+            .catch((value) => setError(value.error)); // Correctly set error message
+        }, [id]);
+      }
+      catch{
+        console.log("error")
+      }
+    }
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,18 +46,34 @@ const Forms = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setData((prev) => [...prev, formData]);
     const send = new FormData();
     send.append("title", formData.title);
     send.append("des", formData.des);
     send.append("image", formData.image);
-    console.log(send);
-    const response = axios
-      .post("http://127.0.0.1:8000", send, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((res) => console.log(res.data))
-      .catch((e) => console.log(e));
+
+    try{
+      if(id){
+        axios
+        .put(`http://127.0.0.1:8000/${id}/`, send, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => {fetchData()})
+        .catch((e) => console.log(e));
+        
+      }
+      else{
+        axios
+        .post("http://127.0.0.1:8000", send, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => {fetchData()})
+        .catch((e) => console.log(e));
+      }
+    }
+    catch{
+      console.log("error")
+    }
+    
 
       setFormData(
         {

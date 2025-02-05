@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 
 import Post from "./Post";
 import { Link } from "react-router-dom";
+import { Context } from "./Context";
 
 const Posts = () => {
-  const [data, setData] = useState([]);
+  const {data} = useContext(Context)
+  
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/")
-      .then((value) => setData(value.data))
-      .catch((value) => setError(value.error)); // Correctly set error message
-  }, []);
+  
 
   if (error) {
     return <div>Error: {error}</div>;
