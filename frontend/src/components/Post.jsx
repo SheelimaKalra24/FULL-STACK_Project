@@ -4,6 +4,7 @@ import Card from "react-bootstrap/Card";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Context } from "./Context";
+import "./Post.css";
 
 const Post = ({ post }) => {
   
@@ -30,14 +31,11 @@ const Post = ({ post }) => {
   };
 
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card className="card-custom">
       <Card.Img
         variant="top"
         src={`http://127.0.0.1:8000/${post.image}`}
-        style={{
-          width: "150px",
-          height: "150px",
-        }}
+        className="card-img-custom"
       />
       <Card.Body className="card-body">
         <Card.Title className="card-title">{post.title}</Card.Title>
@@ -47,7 +45,11 @@ const Post = ({ post }) => {
             Edit
           </Button>
         </Link>
-        <Button variant="primary" className="card-button" onClick={() => postDelete(post.id)}>
+        <Button
+          variant="danger"
+          className="card-button"
+          onClick={() => postDelete(post.id)}
+        >
           Delete
         </Button>
       </Card.Body>
